@@ -11,22 +11,6 @@ const DrawerComponent = ({ navigation }) => {
     navigation.navigate('Result', { data: response });
   };
 
-  const [user, setUser] = useState(null);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      async function fetchUserData() {
-        if (!user?.user_id) {
-          const userData = await getUserData();
-          if (userData) {
-            setUser(userData);
-          }
-        }
-      }
-
-      fetchUserData();
-    }, [])
-  );
 
  return (
     <View style={styles.container}>

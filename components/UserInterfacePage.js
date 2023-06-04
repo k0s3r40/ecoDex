@@ -5,12 +5,14 @@ import {Camera, requestCameraPermissionsAsync} from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
 import {processImage} from "../services/api";
 import * as Location from 'expo-location';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const UserInterfacePage = ({navigation}) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [camera, setCamera] = useState(null);
     const [image, setImage] = useState(null);
     const [cameraModalVisible, setCameraModalVisible] = useState(false);
-const [location, setLocation] = useState(null);
+    const [location, setLocation] = useState(null);
 
     const getPermissionsAsync = async () => {
         const {status} = await requestCameraPermissionsAsync();
@@ -74,7 +76,7 @@ const [location, setLocation] = useState(null);
         // call the processImage function here
         let response = await processImage(imageBase64, lat, lon);
         console.log(response);
-          navigation.navigate('Result', {data: response});
+        navigation.navigate('E-Codex Result', {data: response});
     };
 
     if (hasPermission === null) {
@@ -85,22 +87,23 @@ const [location, setLocation] = useState(null);
     }
 
     return (
-        <View style={styles.container}>
-            {image && <Image source={{uri: image}} style={{width: 200, height: 200}}/>}
-            <TouchableOpacity style={styles.button} onPress={() => setCameraModalVisible(true)}>
-                <Text style={styles.buttonText}>Take a Picture</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={pickImage}>
-                <Text style={styles.buttonText}>Pick an image from gallery</Text>
-            </TouchableOpacity>
-            {image && <TouchableOpacity style={styles.button} onPress={analyzeImage}>
-                <Text style={styles.buttonText}>Analyze</Text>
-            </TouchableOpacity>
-            }
-            {image && <TouchableOpacity style={styles.button} onPress={clearImage}>
-                <Text style={styles.buttonText}>Clear</Text>
-            </TouchableOpacity>
-            }
+        <View style={styles.containerMain}>
+            <View style={styles.container}>
+                {image && <Image source={{uri: image}} style={{width: '80%', height: '80%'}}/>}
+
+                {image && (
+                    <View style={styles.underPicBtnContainer}>
+                        <TouchableOpacity style={styles.button} onPress={analyzeImage}>
+                            <Ionicons name="analytics-outline" size={25} color="#fff"/>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.button, styles.deleteBtn]} onPress={clearImage}>
+                            <Ionicons name="trash-outline" size={25} color="#fff"/>
+                        </TouchableOpacity>
+                    </View>
+                )}
+            </View>
+
 
             <Modal
                 animationType="slide"
@@ -112,6 +115,18 @@ const [location, setLocation] = useState(null);
                     <Text style={styles.buttonText}>Snap</Text>
                 </TouchableOpacity>
             </Modal>
+            <View style={styles.footer}>
+
+                <TouchableOpacity style={styles.footerBtn}     onPress={() => navigation.navigate('E-Codex Results')}>
+                    <Ionicons name="list-outline" size={25} color="#fff"/>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.footerBtn, styles.cameraBtn]} onPress={() => setCameraModalVisible(true)}>
+                    <Ionicons name="camera-outline" size={50} color="#fff"/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.footerBtn} onPress={pickImage}>
+                    <Ionicons name="image-outline" size={25} color="#fff"/>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
@@ -121,25 +136,68 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        width: '100%'
+    },
+    underPicBtnContainer: {
+        flex: 1,
+        minWidth: '100%',
+        flexDirection: "row",
+        justifyContent:'center'
+    },
+    containerMain: {
+        flex: 1,
+        alignItems: 'flex-end',
+        // justifyContent: 'center',
+    },
+    footer: {
+        flex: 1,
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        maxHeight: 50,
+        backgroundColor: 'lightgray',
+        paddingBottom: 10
     },
     camera: {
         flex: 1,
     },
     button: {
-        width: '90%',
-        marginLeft: '5%',
+        width: '20%',
+        marginHorizontal: '5%',
         height: 50,
         backgroundColor: '#007BFF',
+
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
         marginTop: 20,
+    },
+    deleteBtn:{
+        backgroundColor: '#dc0000',
     },
     buttonText: {
         color: '#fff',
         fontSize: 16,
         textAlign: 'center',
     },
+    footerBtn: {
+        color: 'lightgray',
+        textAlign: 'center',
+        marginHorizontal: 5,
+        flex: 1,
+        justifyContent: 'flex-end',
+        flexDirection: 'column',
+
+        maxWidth: 25,
+    },
+    cameraBtn: {
+        borderRadius: 40,
+        padding: 5,
+        marginBottom: 10,
+        maxWidth: 80,
+        backgroundColor: '#007BFF',
+    }
 });
 
 export default UserInterfacePage;

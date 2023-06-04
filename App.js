@@ -6,14 +6,11 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import UserInterfacePage from "./components/UserInterfacePage";
 import { View, TextInput, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
-
-const Stack = createStackNavigator();
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import DrawerComponent from "./components/DrawerComponent";
 import ResultPage from "./components/ResultPage";
 import { getUserData } from "./services/api";
+import ResultsListPage from "./components/ResultsListPage";
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -37,19 +34,20 @@ const App = () => {
 
   return (
     <NavigationContainer>
-       <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerComponent {...props} />}>
-        <Drawer.Screen name="E-Codex" component={HomePage} />
-        <Drawer.Screen name="E-Codex Login" component={LoginPage} />
-        <Drawer.Screen name="E-Codex Register" component={RegisterPage} />
-        <Stack.Screen name="Result" component={ResultPage} />
-        <Drawer.Screen
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="E-Codex" component={HomePage} />
+        <Stack.Screen name="E-Codex Login" component={LoginPage} />
+        <Stack.Screen name="E-Codex Register" component={RegisterPage} />
+        <Stack.Screen name="E-Codex Result" component={ResultPage} />
+        <Stack.Screen name="E-Codex Results" component={ResultsListPage} />
+        <Stack.Screen
           name="E-Codex UI"
           component={UserInterfacePage}
           options={{
             headerLeft: null, // Hide the back arrow
           }}
         />
-      </Drawer.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

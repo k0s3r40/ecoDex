@@ -63,6 +63,17 @@ export const getUserData = async () => {
     return await response.json();
 };
 
+export const getUserSightings = async () => {
+    const response = await fetch(`${API_URL}/sightings/get-sightinglist/`, {
+        headers: await getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+        console.log('Cannot get user data')
+    }
+
+    return await response.json();
+};
 export const getSightingById = async (id) => {
     const response = await fetch(`${API_URL}/sightings/get-sighting/${id}/`, {
         headers: await getAuthHeaders(),
