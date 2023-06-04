@@ -37,13 +37,14 @@ const DrawerComponent = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
-  scrollContainer: {
+  crollContainer: {
     flex: 1,
     marginBottom: 20,
     alignContent:'center',
     justifyContent:'center',
     margin:'auto',
     paddingHorizontal:'auto',
+    height:100
   },
   container: {
     flex: 1,

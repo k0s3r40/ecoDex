@@ -9,6 +9,7 @@ import { View, TextInput, StyleSheet, Image, TouchableOpacity, Text } from 'reac
 import ResultPage from "./components/ResultPage";
 import { getUserData } from "./services/api";
 import ResultsListPage from "./components/ResultsListPage";
+import DiscoverListPage from "./components/ResultsDiscoverListPage";
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,7 @@ const App = () => {
         <Stack.Screen name="E-Codex Login" component={LoginPage} />
         <Stack.Screen name="E-Codex Register" component={RegisterPage} />
         <Stack.Screen name="E-Codex Result" component={ResultPage} />
+        <Stack.Screen name="E-Codex Discover" component={DiscoverListPage} />
         <Stack.Screen name="E-Codex Results" component={ResultsListPage} />
         <Stack.Screen
           name="E-Codex UI"

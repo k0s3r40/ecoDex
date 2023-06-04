@@ -39,6 +39,17 @@ export const getMyFindings = async () => {
     return await response.json();
 };
 
+export const discoverAroundMe= async (lat, lon) => {
+    const response = await fetch(`${API_URL}/sightings/discover?lat=${lat}&lon=${lon}`, {
+        headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+}
 export const getFindingById = async (id) => {
     const response = await fetch(`${API_URL}/findings/${id}`, {
         headers: getAuthHeaders(),

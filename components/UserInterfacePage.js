@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, StyleSheet, Image, Modal} from 'react-nati
 import * as ImagePicker from 'expo-image-picker';
 import {Camera, requestCameraPermissionsAsync} from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
-import {processImage} from "../services/api";
+import {discoverAroundMe, processImage} from "../services/api";
 import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -57,8 +57,8 @@ const UserInterfacePage = ({navigation}) => {
             quality: 1,
         });
 
-        if (!result.cancelled) {
-            setImage(result.uri);
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
         }
     };
 
@@ -78,6 +78,14 @@ const UserInterfacePage = ({navigation}) => {
         console.log(response);
         navigation.navigate('E-Codex Result', {data: response});
     };
+    const discover = async () => {
+        let lat = location.latitude;
+        let lon = location.longitude;
+        let response = await discoverAroundMe( lat, lon);
+        console.log(response);
+        navigation.navigate('E-Codex Discover', {data: response});
+    };
+
 
     if (hasPermission === null) {
         return <View/>;
@@ -126,7 +134,7 @@ const UserInterfacePage = ({navigation}) => {
                 <TouchableOpacity style={styles.footerBtn} onPress={pickImage}>
                     <Ionicons name="image-outline" size={25} color="#fff"/>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.footerBtn, styles.cameraBtn, styles.discoverBtn]} onPress={() => setCameraModalVisible(true)}>
+                <TouchableOpacity style={[styles.footerBtn, styles.cameraBtn, styles.discoverBtn]} onPress={discover}>
                     <Ionicons name="compass-outline" size={50} color="#fff"/>
                 </TouchableOpacity>
             </View>
