@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     marginBottom: 20,
+    alignContent:'center',
+    justifyContent:'center',
+    margin:'auto',
+    paddingHorizontal:'auto',
   },
   container: {
     flex: 1,

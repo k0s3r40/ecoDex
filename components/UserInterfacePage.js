@@ -111,13 +111,13 @@ const UserInterfacePage = ({navigation}) => {
                 visible={cameraModalVisible}
             >
                 <Camera style={styles.camera} ref={ref => setCamera(ref)}/>
-                <TouchableOpacity style={styles.button} onPress={takePicture}>
-                    <Text style={styles.buttonText}>Snap</Text>
+                <TouchableOpacity style={[styles.footerBtn, styles.snapBtn, styles.cameraBtn]} onPress={takePicture}>
+                    <Ionicons name="camera-outline" size={50} color="#fff"/>
                 </TouchableOpacity>
             </Modal>
             <View style={styles.footer}>
 
-                <TouchableOpacity style={styles.footerBtn}     onPress={() => navigation.navigate('E-Codex Results')}>
+                <TouchableOpacity style={styles.footerBtn} onPress={() => navigation.navigate('E-Codex Results')}>
                     <Ionicons name="list-outline" size={25} color="#fff"/>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.footerBtn, styles.cameraBtn]} onPress={() => setCameraModalVisible(true)}>
@@ -125,6 +125,9 @@ const UserInterfacePage = ({navigation}) => {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.footerBtn} onPress={pickImage}>
                     <Ionicons name="image-outline" size={25} color="#fff"/>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.footerBtn, styles.cameraBtn, styles.discoverBtn]} onPress={() => setCameraModalVisible(true)}>
+                    <Ionicons name="compass-outline" size={50} color="#fff"/>
                 </TouchableOpacity>
             </View>
         </View>
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
         flex: 1,
         minWidth: '100%',
         flexDirection: "row",
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     containerMain: {
         flex: 1,
@@ -173,7 +176,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 20,
     },
-    deleteBtn:{
+    deleteBtn: {
         backgroundColor: '#dc0000',
     },
     buttonText: {
@@ -184,19 +187,29 @@ const styles = StyleSheet.create({
     footerBtn: {
         color: 'lightgray',
         textAlign: 'center',
-        marginHorizontal: 5,
+        marginHorizontal: 50,
         flex: 1,
         justifyContent: 'flex-end',
         flexDirection: 'column',
-
         maxWidth: 25,
     },
     cameraBtn: {
+        position: 'absolute',
         borderRadius: 40,
         padding: 5,
+        bottom: 10,
         marginBottom: 10,
         maxWidth: 80,
         backgroundColor: '#007BFF',
+    },
+    discoverBtn: {
+        position: "absolute",
+        right: -20,
+        marginBottom: 100,
+        backgroundColor:'#00e1f6'
+    },
+    snapBtn: {
+        left: '30%'
     }
 });
 

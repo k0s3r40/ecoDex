@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     SightingContainer: {
         minWidth: '30%',
         maxWidth: '30%',
+        maxHeight:'20%',
         marginHorizontal:'1%',
         marginVertical:10,
         flex: 1,
