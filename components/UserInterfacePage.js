@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Image, Modal} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Image, Modal, ActivityIndicator} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import {Camera, requestCameraPermissionsAsync} from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
@@ -7,13 +7,14 @@ import {discoverAroundMe, processImage} from "../services/api";
 import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
 const UserInterfacePage = ({navigation}) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [camera, setCamera] = useState(null);
     const [image, setImage] = useState(null);
     const [cameraModalVisible, setCameraModalVisible] = useState(false);
     const [location, setLocation] = useState(null);
-
+    const [loading, setLoading] = useState(false);
     const getPermissionsAsync = async () => {
         const {status} = await requestCameraPermissionsAsync();
         setHasPermission(status === 'granted');
@@ -67,6 +68,7 @@ const UserInterfacePage = ({navigation}) => {
     };
 
     const analyzeImage = async () => {
+        setLoading(true);
         // convert image to base64
         let imageBase64 = await FileSystem.readAsStringAsync(image, {encoding: 'base64'});
 
@@ -75,6 +77,7 @@ const UserInterfacePage = ({navigation}) => {
         let lon = location.longitude;
         // call the processImage function here
         let response = await processImage(imageBase64, lat, lon);
+        setLoading(false);
         console.log(response);
         navigation.navigate('E-Codex Result', {data: response});
     };
@@ -96,9 +99,15 @@ const UserInterfacePage = ({navigation}) => {
 
     return (
         <View style={styles.containerMain}>
-            <View style={styles.container}>
-                {image && <Image source={{uri: image}} style={{width: '80%', height: '80%'}}/>}
+            {loading && (
+            <View style={styles.absolutePosition}>
+                <View style={{transform: [{scale: 2.5}]}}>
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                </View>
+            </View>)}
+            <View style={[styles.container, styles.relativePosition]}>
 
+                {image && <Image source={{uri: image}} style={{width: '80%', height: '80%'}}/>}
                 {image && (
                     <View style={styles.underPicBtnContainer}>
                         <TouchableOpacity style={styles.button} onPress={analyzeImage}>
@@ -171,7 +180,7 @@ const styles = StyleSheet.create({
         maxHeight: 50,
         // backgroundColor: 'lightgray',
         paddingBottom: 10,
-          backgroundColor: '#007BFF',
+        backgroundColor: '#007BFF',
     },
     camera: {
         flex: 1,
@@ -202,18 +211,16 @@ const styles = StyleSheet.create({
         flex: 1,
 
         justifyContent: 'center',
-        margin:'auto',
+        margin: 'auto',
         flexDirection: 'row',
         // borderColor:'white',
-        minWidth:'20%',
-        minHeight:'150%',
-        marginTop:40,
-        marginBottom:0,
-        paddingBottom:0,
+        minWidth: '20%',
+        minHeight: '150%',
+        marginTop: 40,
+        marginBottom: 0,
+        paddingBottom: 0,
         // borderWidth:1,
-        bottom:-5
-
-
+        bottom: -5
 
 
     },
@@ -225,18 +232,18 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         maxWidth: 80,
         backgroundColor: '#007BFF',
-        borderColor:'white',
-        borderWidth:1,
-          minHeight:'100%',
-        marginTop:0,
+        borderColor: 'white',
+        borderWidth: 1,
+        minHeight: '100%',
+        marginTop: 0,
     },
     discoverBtn: {
         position: "absolute",
         // right: -20,
         marginBottom: 100,
-        bottom:200,
+        bottom: 200,
         padding: 0,
-        maxWidth:2000,
+        maxWidth: 2000,
         backgroundColor: 'rgba(133,79,79,0)'
     },
     discoverBtnIcon: {
@@ -244,6 +251,26 @@ const styles = StyleSheet.create({
     },
     snapBtn: {
         left: '30%'
+    },
+    relativePosition: {
+        position: 'relative',
+    },
+    absolutePosition: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 9999999,
+        justifyContent: 'center', // Center vertically
+        alignItems: 'center', // Center horizontally
+        backgroundColor: 'rgba(0,0,0,0.5)', // Optional: you might want to have a semi-transparent background to emphasize the overlay
+    },
+    LoadingIndicator: {
+        width: '100%',
+        height: '100%',
+        left: 0,
+        zIndex: 999,
     }
 });
 

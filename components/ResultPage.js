@@ -12,17 +12,20 @@ const ResultPage = ({ route }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.text}>Latitude: {data.latitude}</Text>
-      <Text style={styles.text}>Longitude: {data.longitude}</Text>
-      <Text style={styles.text}>Name: {data.specimen.name}</Text>
-      <Text style={styles.text}>Description: {data.specimen.description}</Text>
-      <Text style={styles.text}>Timestamp: {data.timestamp}</Text>
+      {/*<Text style={styles.text}>Latitude: {data.latitude}</Text>*/}
+      {/*<Text style={styles.text}>Longitude: {data.longitude}</Text>*/}
+      <Text style={styles.textTitle}>{data.specimen.name}</Text>
+      <Text style={styles.textDescription}>{data.specimen.description}</Text>
+      {/*<Text style={styles.text}>Timestamp: {data.timestamp}</Text>*/}
       <Image style={styles.image} source={{ uri: base64Image }} />
       {data.europeana_data && (
         <React.Fragment>
-          <Text style={styles.text}>{data.europeana_data.name}</Text>
+            {/*<Text style={styles.textTitle}>-------</Text>*/}
+            <Text style={styles.textTitle}>A legendary explorer once found here </Text>
+            {/*<Text style={styles.textTitle}>-------</Text>*/}
+          <Text style={styles.textDescription}>{data.europeana_data.name}</Text>
           <Image style={styles.image} source={{ uri: base64Image2 }} />
-          <Text style={styles.text}>Description: {data.europeana_data.description}</Text>
+          <Text style={styles.textDescription}>{data.europeana_data.description}</Text>
         </React.Fragment>
       )}
     </ScrollView>
@@ -30,6 +33,17 @@ const ResultPage = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  textTitle:{
+    fontSize:24,
+    fontWeight:"bold",
+    marginBottom:20,
+    textAlign:'center',
+    marginTop:20,
+  },
+  textDescription:{
+    textAlign:"left",
+    fontSize:20,
+  },
   container: {
     flexGrow: 1,
     alignItems: 'center',
@@ -42,8 +56,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: 500,
     marginTop: 10,
   },
 });
