@@ -81,7 +81,7 @@ const UserInterfacePage = ({navigation}) => {
     const discover = async () => {
         let lat = location.latitude;
         let lon = location.longitude;
-        let response = await discoverAroundMe( lat, lon);
+        let response = await discoverAroundMe(lat, lon);
         console.log(response);
         navigation.navigate('E-Codex Discover', {data: response});
     };
@@ -134,9 +134,11 @@ const UserInterfacePage = ({navigation}) => {
                 <TouchableOpacity style={styles.footerBtn} onPress={pickImage}>
                     <Ionicons name="image-outline" size={25} color="#fff"/>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.footerBtn, styles.cameraBtn, styles.discoverBtn]} onPress={discover}>
-                    <Ionicons name="compass-outline" size={50} color="#fff"/>
-                </TouchableOpacity>
+                {!image && (
+                    <TouchableOpacity style={[styles.discoverBtn]} onPress={discover}>
+                        <Ionicons style={styles.discoverBtnIcon} name="compass-outline" size={200} color="#fff"/>
+                        <Text style={styles.buttonText}>Discover</Text>
+                    </TouchableOpacity>)}
             </View>
         </View>
     );
@@ -167,8 +169,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         maxHeight: 50,
-        backgroundColor: 'lightgray',
-        paddingBottom: 10
+        // backgroundColor: 'lightgray',
+        paddingBottom: 10,
+          backgroundColor: '#007BFF',
     },
     camera: {
         flex: 1,
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#dc0000',
     },
     buttonText: {
-        color: '#fff',
+        color: '#000000',
         fontSize: 16,
         textAlign: 'center',
     },
@@ -197,9 +200,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: 50,
         flex: 1,
-        justifyContent: 'flex-end',
-        flexDirection: 'column',
-        maxWidth: 25,
+
+        justifyContent: 'center',
+        margin:'auto',
+        flexDirection: 'row',
+        // borderColor:'white',
+        minWidth:'20%',
+        minHeight:'150%',
+        marginTop:40,
+        marginBottom:0,
+        paddingBottom:0,
+        // borderWidth:1,
+        bottom:-5
+
+
+
+
     },
     cameraBtn: {
         position: 'absolute',
@@ -209,12 +225,22 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         maxWidth: 80,
         backgroundColor: '#007BFF',
+        borderColor:'white',
+        borderWidth:1,
+          minHeight:'100%',
+        marginTop:0,
     },
     discoverBtn: {
         position: "absolute",
-        right: -20,
+        // right: -20,
         marginBottom: 100,
-        backgroundColor:'#00e1f6'
+        bottom:200,
+        padding: 0,
+        maxWidth:2000,
+        backgroundColor: 'rgba(133,79,79,0)'
+    },
+    discoverBtnIcon: {
+        color: '#006afd',
     },
     snapBtn: {
         left: '30%'
