@@ -1,4 +1,4 @@
-const API_URL = 'http://192.168.165.72:8000/api/v1';
+const API_URL = 'https://plankton-app-u3gio.ondigitalocean.app/api/v1';
 const getAuthHeaders = async () => {
     const token = await getData('token');
     console.log(token)
