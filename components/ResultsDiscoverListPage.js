@@ -14,7 +14,7 @@ const DiscoverListPage = ({navigation, route}) => {
                             key={index}
                         >
                             <Text style={styles.drawerItemText}>{item.name}</Text>
-                            <Image style={styles.image} source={{uri: item.image}}/>
+                            <Image style={styles.image} source={{uri: item.image}} resizeMode="contain"/>
                         </TouchableOpacity>
                     ))}
                 </View>

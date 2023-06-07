@@ -107,7 +107,7 @@ const UserInterfacePage = ({navigation}) => {
             </View>)}
             <View style={[styles.container, styles.relativePosition]}>
 
-                {image && <Image source={{uri: image}} style={{width: '80%', height: '80%'}}/>}
+                {image && <Image source={{uri: image}} style={{width: '80%', height: '80%'}} resizeMode="contain"/>}
                 {image && (
                     <View style={styles.underPicBtnContainer}>
                         <TouchableOpacity style={styles.button} onPress={analyzeImage}>
@@ -127,7 +127,7 @@ const UserInterfacePage = ({navigation}) => {
                 transparent={false}
                 visible={cameraModalVisible}
             >
-                <Camera style={styles.camera} ref={ref => setCamera(ref)}/>
+                <Camera style={styles.camera} ref={ref => setCamera(ref)} resizeMode="contain"/>
                 <TouchableOpacity style={[styles.footerBtn, styles.snapBtn, styles.cameraBtn]} onPress={takePicture}>
                     <Ionicons name="camera-outline" size={50} color="#fff"/>
                 </TouchableOpacity>
@@ -180,16 +180,18 @@ const styles = StyleSheet.create({
         maxHeight: 50,
         // backgroundColor: 'lightgray',
         paddingBottom: 10,
-        backgroundColor: '#007BFF',
+        backgroundColor: 'green',
     },
     camera: {
         flex: 1,
+        width:'100%',
+        height:'80%',
     },
     button: {
         width: '20%',
         marginHorizontal: '5%',
         height: 50,
-        backgroundColor: '#007BFF',
+        backgroundColor: 'green',
 
         alignItems: 'center',
         justifyContent: 'center',
@@ -231,7 +233,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         marginBottom: 10,
         maxWidth: 80,
-        backgroundColor: '#007BFF',
+        backgroundColor: 'green',
         borderColor: 'white',
         borderWidth: 1,
         minHeight: '100%',
@@ -247,7 +249,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(133,79,79,0)'
     },
     discoverBtnIcon: {
-        color: '#006afd',
+        color: 'green',
     },
     snapBtn: {
         left: '30%'

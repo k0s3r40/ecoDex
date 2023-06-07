@@ -36,7 +36,7 @@ const HomePage = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/splashscreen.png')}/>
+      <Image style={styles.image} source={require('../assets/splashscreen.png')} resizeMode="contain"/>
       <View style={styles.btncontainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('E-Codex Login')}>
           <Text style={styles.buttonText}>Login</Text>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         width: '90%', // Width 90% of the container
         height: 50,
         marginBottom: 10,
-        backgroundColor: '#007BFF',
+        backgroundColor: 'green',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
@@ -84,6 +84,10 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontSize: 16,
+    },
+    image:{
+        width:'80%',
+        height:'50%'
     }
 });
 
